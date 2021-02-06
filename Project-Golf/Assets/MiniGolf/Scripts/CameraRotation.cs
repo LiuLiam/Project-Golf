@@ -2,18 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Script which makes camera rotate around ball
+/// </summary>
 public class CameraRotation : MonoBehaviour
 {
-    [SerializeField] private float _rotationSpeed = 0.2f;
+    [SerializeField] private float rotationSpeed = 0.2f;    //rotation speed
 
-    private void Update()
+    public static CameraRotation instance;
+
+    private void Awake()
     {
-        if(Input.GetMouseButton(0))
-            RotateCamera(Input.GetAxis("Mouse X"));
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public void RotateCamera(float xAxis)
+    /// <summary>
+    /// Metod called to rotate camera
+    /// </summary>
+    /// <param name="XaxisRotation">Mouse X value</param>
+    public void RotateCamera(float XaxisRotation)           
     {
-        transform.Rotate(Vector3.down, -xAxis * _rotationSpeed);
+        transform.Rotate(Vector3.down, -XaxisRotation * rotationSpeed); //rotate the camera
     }
 }
